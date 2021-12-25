@@ -7,6 +7,7 @@ import com.myapp.secureapp.models.User;
 import com.myapp.secureapp.repositories.UserRepository;
 import com.myapp.secureapp.services.UserService;
 import com.myapp.secureapp.utils.Jwtutil;
+import com.myapp.secureapp.utils.ResponseHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,9 @@ public class UserController {
         user1 = userRepository.findByUsername(user.getUsername());
         if (user1 == null) {
             userService.createuser(user);
-            return new ResponseEntity<> (user, HttpStatus.CREATED);
+            new ResponseHandler();
+            //return new ResponseEntity<> (user, HttpStatus.CREATED);
+            return ResponseHandler.generateResponse ("true",HttpStatus.CREATED,user);
         }
         else {
             return new ResponseEntity<> ("User Already Exist.", HttpStatus.CONFLICT);
